@@ -1,6 +1,7 @@
 import express from "express";
 import tagsRoute from "./routes/tags.js";
 import photosRoute from "./routes/photos.js";
+
 import cors from "cors";
 
 const port = process.env.PORT ?? 5050;
@@ -17,5 +18,5 @@ app.use("/tags", tagsRoute);
 app.use("/photos", photosRoute);
 
 app.listen(port, function () {
-  console.log(`Server is running on PORT ${PORT}`);
+  console.log(`Server is running on PORT ${port}`);
 });
