@@ -1,8 +1,9 @@
 import express from "express";
+import cors from "cors";
 import tagsRoute from "./routes/tags.js";
 import photosRoute from "./routes/photos.js";
 
-import cors from "cors";
+import "dotenv/config";
 
 const port = process.env.PORT ?? 5050;
 const app = express();
