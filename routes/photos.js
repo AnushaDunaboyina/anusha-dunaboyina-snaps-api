@@ -2,7 +2,7 @@ import express from "express";
 import fs from "fs";
 const router = express.Router();
 
-// Get Tags
+// Get Photos
 router.get("/", (req, res) => {
   try {
     const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
