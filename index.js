@@ -8,6 +8,8 @@ import "dotenv/config";
 const port = process.env.PORT ?? 5050;
 const app = express();
 
+app.use(express.json()); // Middleware to parse JSON bodies
+
 app.use(cors());
 
 app.get("/", (req, res) => {

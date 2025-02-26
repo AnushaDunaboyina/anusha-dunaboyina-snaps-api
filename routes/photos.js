@@ -1,5 +1,6 @@
 import express from "express";
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 const router = express.Router();
 
 // Get Photos
@@ -13,6 +14,7 @@ router.get("/", (req, res) => {
   }
 });
 
+// Get individual photos
 router.get("/:id", (req, res) => {
   try {
     const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
@@ -31,6 +33,97 @@ router.get("/:id", (req, res) => {
     res.status(500).send("Error reading individual photo");
     return;
   }
+});
+
+// Get comments for individual photos
+router.get("/:id/comments", (req, res) => {
+  try {
+    const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
+    const photos = JSON.parse(photosFile);
+
+    const photoId = req.params.id;
+
+    const individualPhoto = photos.find((photo) => photo.id === photoId);
+
+    if (!individualPhoto) {
+      return res.status(404).send("Photo not found");
+    }
+
+    const comments = individualPhoto.comments || [];
+
+    res.json(comments);
+  } catch (error) {
+    res.status(500).send("Error fetching comments");
+    return;
+  }
+});
+
+// Post a new comment
+router.post("/:id/comments", (req, res) => {
+  try {
+    const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
+    const photos = JSON.parse(photosFile);
+
+    const photoId = req.params.id;
+
+    const individualPhoto = photos.find((photo) => photo.id === photoId);
+
+    if (!individualPhoto) {
+      return res.status(404).send("Photo not found");
+    }
+
+    const { name, comment } = req.body;
+
+    if (!name || !comment) {
+      return res.status(400).send("Name and comment are required");
+    }
+
+    const newComment = {
+      id: uuidv4(),
+      name,
+      comment,
+      timestamp: Date.now(),
+    };
+
+    if (!individualPhoto.comments) {
+      individualPhoto.comments = [];
+    }
+    individualPhoto.comments.push(newComment);
+
+    fs.writeFileSync(
+      process.cwd() + "/data/photos.json",
+      JSON.stringify(photos, null, 2)
+    );
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error("Error posting comments:", error);
+    res.status(500).send("Error posting comment");
+  }
+});
+
+// Update the Photos URLs
+
+router.post("/", (req, res) => {
+  const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
+  const photos = JSON.parse(photosFile);
+  const baseUrl = "http://localhost:5050/";
+  const filePath = process.cwd() + "/data/photos.json";
+ 
+  const updatedPhotoUrl = photos.map((photo) => {
+    const photoFileName = photo.photo.split("/").pop();
+    
+    // Replace the old URL with the new one
+  })
+ 
+
+
+  
+
+  
+  })
+
+
 });
 
 export default router;
