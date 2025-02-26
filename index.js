@@ -10,6 +10,8 @@ const app = express();
 
 app.use(express.json()); // Middleware to parse JSON bodies
 
+app.use(express.static("public")); // Serve static files from the public folder
+
 app.use(cors());
 
 app.get("/", (req, res) => {

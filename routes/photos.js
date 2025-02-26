@@ -105,25 +105,32 @@ router.post("/:id/comments", (req, res) => {
 // Update the Photos URLs
 
 router.post("/", (req, res) => {
-  const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
-  const photos = JSON.parse(photosFile);
-  const baseUrl = "http://localhost:5050/";
-  const filePath = process.cwd() + "/data/photos.json";
- 
-  const updatedPhotoUrl = photos.map((photo) => {
-    const photoFileName = photo.photo.split("/").pop();
-    
-    // Replace the old URL with the new one
-  })
- 
+  try {
+    const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
+    const photos = JSON.parse(photosFile);
+    const baseUrl = "http://localhost:5050/images";
 
+    const updatedPhotosUrl = photos.map((photo) => {
+      const photoFileName = photo.photo.split("/").pop();
 
-  
+      // Replace the old URL with the new one
+      return {
+        ...photo,
+        photo: `${baseUrl}/${photoFileName}`,
+      };
+    });
 
-  
-  })
+    // save the updated data back to the photos.json file
+    fs.writeFileSync(
+      process.cwd() + "/data/photos.json",
+      JSON.stringify(updatedPhotosUrl, null, 2)
+    );
 
-
+    res.status(200).json("Photo URLs updated successfully");
+  } catch (error) {
+    console.error("Error updating photo URLs:", error);
+    res.status(500).send("Error updating photo URLs");
+  }
 });
 
 export default router;
