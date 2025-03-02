@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 const router = express.Router();
 
 // Get Photos
-router.get("/", (req, res) => {
+router.get("/", (_req, res) => {
   try {
     const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
     const photos = JSON.parse(photosFile);
@@ -104,7 +104,7 @@ router.post("/:id/comments", (req, res) => {
 
 // Update the Photos URLs
 
-router.post("/", (req, res) => {
+router.post("/", (_req, res) => {
   try {
     const photosFile = fs.readFileSync(process.cwd() + "/data/photos.json");
     const photos = JSON.parse(photosFile);
