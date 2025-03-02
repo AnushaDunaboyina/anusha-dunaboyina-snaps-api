@@ -212,7 +212,20 @@
       "Washington",
       "Cathedral"
     ],
-    "comments": []
+    "comments": [
+      {
+        "id": "8195f401-c043-43c0-9d1e-0d7176766914",
+        "name": "Anusha",
+        "comment": "Stunning shot!",
+        "timestamp": 1740957787901
+      },
+      {
+        "id": "a2fe69ab-ca40-4a31-a36d-e9b57317fe3d",
+        "name": "Rachel",
+        "comment": "I hope to capture photos like you one day! You always manage to capture the city with great visual depth.",
+        "timestamp": 1740957931750
+      }
+    ]
   },
   {
     "id": "7cf76704-9508-4632-8077-caec02d1929e",
